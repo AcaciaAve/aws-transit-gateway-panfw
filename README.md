@@ -127,6 +127,7 @@ Deploys two Palo Alto firewalls (v8.1.x) into the centralised NAT VPC to be used
     ```
 
 4. **Deploy** 
+    
     Authenticate to your AWS account
 
     Run "terraform plan"
@@ -185,14 +186,14 @@ I observed that any issue preventing licensing from registering interrupts some 
 
 You get one chance to bootstrap so if it fails to complete successfully will need to manually resolve the issue, gain access to the firewall's management interface, deactivate the licenses and perform a redeploy of the firewalls.
 
-Palo Alto Networks often suggests assigning the management interface a pubic IP address so that management and licensing will be available over the internet however this would mean that the interface is created in the DMZ which doesn't typically have access to Panorama in the physical data centre. It also limits access to any services which may also be running on-prem such as DNS, user-id agents, RADIUS etc. I don't find this to be a practical recommendation.
+Palo Alto Networks often suggests assigning the management interface a pubic IP address so that management and licensing will be available over the internet however this would mean that the interface is created in the DMZ which doesn't typically have access to Panorama in the physical data centre. It also limits access to any services which may also be running on-prem such as DNS, user-id agents, RADIUS etc.
 
 I create the firewalls management interface in a private subnet with access to the on-prem data centre and panorama however if you intend to use the firewalls to provide internet firewalling and NAT for your AWS infrastructure the firewalls are unable to complete bootstrapping because the management interface requires the firewall to provide internet access for licensing then bootstrap.
 This creates a chicken and the egg scenario, the firewall needs to bootstrap to get it's config and provide internet access from the private subnet (and its mgmt interface) however it can't configure itself until it gets internet access to license.
 
 The way I worked around this was to deploy a NAT gateway on initial deployment for internet traffic, once the firewalls have been deployed, bootstrap complete and the firewalls have their configuration I modify a boolean variable and rerun terraform. The NAT gateway is then destroyed, and route tables adjusted to route internet traffic out of the firewalls.
 
-it's a dissapointreluctant workaround.
+it's a reluctant workaround.
 
 # High-Availability
 High availability for any appliance in AWS (IMO) has always been sub-par and this is no different, BGP seems to be the best solution for enabling control of routing and failover between availability zones and the only way to enable BGP is to create an IPsec VPN between the transit gateway and firewalls.
