@@ -30,17 +30,17 @@ variable "S3Bucket_azb" {
 }
 variable "tunnel1_preshared_key_aza" {
     description = "Tunnel preshared-key for IPsec VPN between TGW and firewalls."
-    default = "PSK-PleaseChange"
+    default = "PleaseChange"
 }
 variable "tunnel2_preshared_key_aza" {
     description = "Tunnel preshared-key for IPsec VPN between TGW and firewalls."
-    default = "PSK-PleaseChange"
+    default = "PleaseChange"
 }
 variable "tunnel1_preshared_key_azb" {
     description = "Tunnel preshared-key for IPsec VPN between TGW and firewalls."
-    default = "PSK-PleaseChange"
+    default = "PleaseChange"
 }
 variable "tunnel2_preshared_key_azb" {
     description = "Tunnel preshared-key for IPsec VPN between TGW and firewalls."
-    default = "PSK-PleaseChange"
+    default = "PleaseChange"
 }
