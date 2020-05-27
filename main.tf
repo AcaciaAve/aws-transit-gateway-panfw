@@ -30,7 +30,8 @@ module "PanFw" {
   dmz_b_subnet_id = module.Network.dmz_b_subnet_id
   tgw_id = module.Tgw.tgw_id
   vpc_att_transit_id = module.Tgw.vpc_att_transit_id
-  nat_gateway_id = module.Network.nat_gateway_id
+  #nat_gateway_aza_id = module.Network.nat_gateway_aza_id
+  #nat_gateway_azb_id = module.Network.nat_gateway_azb_id
   priv_aza_routeTable_id = module.Network.priv_aza_routeTable_id
   priv_azb_routeTable_id = module.Network.priv_azb_routeTable_id
   priva_id = module.Network.priva_id
@@ -38,7 +39,7 @@ module "PanFw" {
   team = module.Network.team
   igw_id = module.Network.igw_id
   priv_a_subnet_defaultRoute_bool = module.Network.priv_a_subnet_defaultRoute_bool
-  priv_b_subnet_defaultRoute_bool = module.Network.priv_a_subnet_defaultRoute_bool
+  priv_b_subnet_defaultRoute_bool = module.Network.priv_b_subnet_defaultRoute_bool
   environment = module.Network.environment
 }
 

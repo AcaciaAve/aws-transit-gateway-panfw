@@ -12,11 +12,19 @@ variable "ServerKeyName" {
     default = "key-pair-name"
 }
 #General variables, enter the required string for each value.
-variable "FwInstanceSize" {
+variable "FwInstanceSize_aza" {
     description = "EC2 instance side to use for VM-Series firewall"
     default = "m4.xlarge"
 }
-variable "pan_ami" {
+variable "pan_ami_aza" {
+    description = "Firewall AMI base image version"
+    default = "ami-00d61562"
+}
+variable "FwInstanceSize_azb" {
+    description = "EC2 instance side to use for VM-Series firewall"
+    default = "m4.xlarge"
+}
+variable "pan_ami_azb" {
     description = "Firewall AMI base image version"
     default = "ami-00d61562"
 }

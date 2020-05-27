@@ -24,7 +24,8 @@ variable "environment" {}
 #Create transit gateway
 resource "aws_ec2_transit_gateway" "transit_tgw" {
   amazon_side_asn = var.tgw_amazon_asn
-  auto_accept_shared_attachments = "disable"
+  auto_accept_shared_attachments = "enable"
+  vpn_ecmp_support = "enable"
   tags = {Name = join("",list("tgw-", var.team))}
 }
 

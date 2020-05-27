@@ -156,6 +156,19 @@ Deploys two Palo Alto firewalls (v8.1.x) into the centralised NAT VPC to be used
     Run "terraform plan"
     Run "terraform apply"
 
+# Procedures
+## Redeploy a firewall in one AZ
+You can redeploy the firewall in a single AZ by marking one of the existing firewalls as tainted.
+- *Optional:* You will decrease the failover time by manipulating the BGP attributes, for example increase the "as prepend" value of the default route advertised from the preferred prefix so that the route to the other firewall is more preferred.
+- Deactivate the license from the Palo Alto Networks firewall.  
+  - Login to the firewall GUI --> Licenses --> License Management --> Deactivate VM --> Complete manually --> Export license token  
+  - Login to the Palo Alto support page --> Assets --> VM-Series Auth Codes --> Deactivate License(s) --> Paste the token  
+  - The "Quantity of VM Provisioned" should decrement.  
+- `terraform taint module.PanFw.aws_instance.FwInstance_aza`  
+- Set the variable `priv_a_subnet_defaultRoute = "true"`  
+- `terraform plan`  
+- `terraform apply`  
+
 # What the documentation doesn't tell you.
 
 There was a lot of testing and workaround I had to determine on my own to help understand the bootstrap flow and licensing, I've summarised a small number below.

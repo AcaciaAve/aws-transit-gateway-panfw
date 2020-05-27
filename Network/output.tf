@@ -22,10 +22,6 @@ output "dmz_b_subnet_id" {
     value = aws_subnet.dmz_b_subnet.id
     description = "Priv AZB subnet id"
 }
-output "nat_gateway_id" {
-    value = aws_nat_gateway.nat_gateway.*.id
-    description = "NAT gateway id"
-}
 output "priv_aza_routeTable_id" {
     value = [aws_route_table.priv_aza_routeTable]
     description = "Private AZA route table id"

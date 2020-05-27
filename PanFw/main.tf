@@ -18,7 +18,6 @@ variable "dmz_a_subnet_id" {}
 variable "dmz_b_subnet_id" {}
 variable "tgw_id" {}
 variable "vpc_att_transit_id" {}
-variable "nat_gateway_id" {}
 variable "priv_aza_routeTable_id" {}
 variable "priv_azb_routeTable_id" {}
 variable "priva_id" {}
@@ -183,7 +182,7 @@ resource "aws_eip_association" "fw_eip_publicAssoc_aza" {
   allocation_id = aws_eip.publicEIP_aza.id
 }
 
-resource "aws_instance" "publicEIP_aza" {
+resource "aws_instance" "FwInstance_aza" {
   depends_on = [
     var.priva_id,
     aws_eip_association.fw_eip_publicAssoc_aza,
@@ -198,8 +197,8 @@ resource "aws_instance" "publicEIP_aza" {
   iam_instance_profile = aws_iam_instance_profile.FwBootstrapInstProfile.name
   instance_initiated_shutdown_behavior = "stop"
   ebs_optimized = true
-  ami = var.pan_ami
-  instance_type = var.FwInstanceSize
+  ami = var.pan_ami_aza
+  instance_type = var.FwInstanceSize_aza
 
   ebs_block_device {
     device_name = "/dev/xvda"
@@ -212,12 +211,12 @@ resource "aws_instance" "publicEIP_aza" {
   monitoring = false
 
   network_interface {
-    device_index = 0
+    device_index = 1
     network_interface_id = aws_network_interface.FwMgmtNic_aza.id
   }
 
   network_interface {
-    device_index = 1
+    device_index = 2
     network_interface_id = aws_network_interface.FwPublicNic_aza.id
   }
 
@@ -286,8 +285,8 @@ resource "aws_instance" "FwInstance_azb" {
   iam_instance_profile = aws_iam_instance_profile.FwBootstrapInstProfile.name
   instance_initiated_shutdown_behavior = "stop"
   ebs_optimized = true
-  ami = var.pan_ami
-  instance_type = var.FwInstanceSize
+  ami = var.pan_ami_azb
+  instance_type = var.FwInstanceSize_azb
 
   ebs_block_device {
     device_name = "/dev/xvda"
@@ -300,12 +299,12 @@ resource "aws_instance" "FwInstance_azb" {
   monitoring = false
 
   network_interface {
-    device_index = 0
+    device_index = 1
     network_interface_id = aws_network_interface.FwMgmtNic_azb.id
   }
 
   network_interface {
-    device_index = 1
+    device_index = 0
     network_interface_id = aws_network_interface.FwPublicNic_azb.id
   }
 
